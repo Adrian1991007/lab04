@@ -8,38 +8,49 @@ import java.util.Objects;
 
 public class Pachet {
     Jucarie jucarie;
-    boolean cereCutie;
-    boolean cerePanglica;
     ICutie cutie;
     double lungPanglica;
 
     public Pachet(Jucarie jucarie, boolean cereCutie, boolean cerePanglica) {
         this.jucarie = jucarie;
-        this.cereCutie = cereCutie;
-        this.cerePanglica = cerePanglica;
-        cutie = FabricaCutii.getCutie(jucarie);
-        lungPanglica = cutie.getLungimePanglica();
+        if(cereCutie)
+        {
+            cutie = FabricaCutii.getCutie(jucarie);
+            if (cerePanglica)
+                lungPanglica = RolaPanglica.getRola().cumpara(cutie.getLungimePanglica());
+        }
     }
 
-
     public double pretPachet() {
-        return jucarie.getPret() + (cereCutie ? cutie.pret() : 0) + (cerePanglica ? RolaPanglica.getPret(cutie) : 0);
+        return jucarie.getPret() + (cutie != null ? cutie.pret() : 0) + (lungPanglica > 0 ? RolaPanglica.getPret(Objects.requireNonNull(cutie)) : 0);
     }
 
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        if(cereCutie)
+        if(cutie != null )
         {
             stringBuilder.append(", impachetat in ").append(cutie);
-            if(cerePanglica)
+            if(lungPanglica > 0)
             {
-                stringBuilder.append(", lungPanglica=").append(lungPanglica);
+                stringBuilder.append(", lungPanglica=").append(lungPanglica).append("}");
             }
         }
 
         return "Pachet{" +
                 "jucarie=" + jucarie + stringBuilder;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Pachet pachet)) return false;
+        return Double.compare(pachet.lungPanglica, lungPanglica) == 0 && jucarie.equals(pachet.jucarie) && (cutie == null || cutie.equals(pachet.cutie));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(jucarie, cutie, lungPanglica);
     }
 
     public static void main(String[] args) {

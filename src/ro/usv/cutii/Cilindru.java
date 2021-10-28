@@ -1,5 +1,7 @@
 package ro.usv.cutii;
 
+import java.util.Objects;
+
 public class Cilindru implements ICutie {
     private final double r;
     private final double h;
@@ -25,6 +27,18 @@ public class Cilindru implements ICutie {
                 "{r=" + r +
                 ", h=" + h +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Cilindru cilindru)) return false;
+        return Double.compare(cilindru.r, r) == 0 && Double.compare(cilindru.h, h) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(r, h);
     }
 
     @Override

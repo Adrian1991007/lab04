@@ -51,29 +51,11 @@ public class Magazin {
 
     public int cautaPachet(Pachet x)
     {
-        int i = 1;
-        if(listaVanzari.isEmpty())
-            return -1;
-        for (Pachet pachet : listaVanzari)
-        {
-            if(pachet.cerePanglica == x.cerePanglica && pachet.cereCutie == x.cereCutie)
-            {
-                if (pachet.jucarie.getTipCutie().equals(x.jucarie.getTipCutie()) && pachet.jucarie.getPret() == (x.jucarie.getPret()))
-                {
-                    double[] dimpac = pachet.jucarie.getDimensiuni();
-                    double[] dimx = x.jucarie.getDimensiuni();
-                    if (dimx[0] == dimpac[0] && dimx[1] == dimpac[1] && dimx[2] == dimpac[2])
-                        return i;
-                }
-            }
-            i++;
-        }
-        return -1;
+       return  listaVanzari.indexOf(x);
     }
 
     public void afisPacheteDupaPret(boolean descrescator)
     {
-        int i = 1;
         ArrayList<Pachet> CopielistaVanzari = new ArrayList<>(listaVanzari);
         if(descrescator)
         {
@@ -81,8 +63,8 @@ public class Magazin {
             CopielistaVanzari.sort(Comparator.comparing(Pachet::pretPachet).reversed());
             for (Pachet pachet : CopielistaVanzari)
             {
-                System.out.println(i++ + "." + pachet);
-                System.out.println(pachet.pretPachet());
+                System.out.println(listaVanzari.indexOf(pachet) + "." + pachet);
+                System.out.println("Pret=" + pachet.pretPachet());
             }
         }
         else
@@ -91,8 +73,8 @@ public class Magazin {
             CopielistaVanzari.sort(Comparator.comparing(Pachet::pretPachet));
             for (Pachet pachet : CopielistaVanzari)
             {
-                System.out.println(i++ + "." + pachet);
-                System.out.println(pachet.pretPachet());
+                System.out.println(listaVanzari.indexOf(pachet) + "." + pachet);
+                System.out.println("Pret=" + pachet.pretPachet());
             }
         }
     }
@@ -100,13 +82,12 @@ public class Magazin {
     public void afisVanzari()
     {
         double PretTotal = 0;
-        int i = 1;
         System.out.println("Vanzari efectuate");
         for (Pachet pachet : listaVanzari)
         {
-            System.out.println(i++ + "." + pachet);
+            System.out.println(listaVanzari.indexOf(pachet) + "." + pachet);
             PretTotal += pachet.pretPachet();
-            System.out.println(pachet.pretPachet());
+            System.out.println("Pret=" + pachet.pretPachet());
         }
         System.out.println("Suma totala incasata=" + PretTotal);
     }
@@ -140,17 +121,20 @@ public class Magazin {
 //        System.out.println("Pentru jucaria:" + jucarie2 + " " + cutiejucarie2);
 //        ICutie cutiejucarie3 = FabricaCutii.getCutie(jucarie3);
 //        System.out.println("Pentru jucaria:" + jucarie3 + " " + cutiejucarie3);
-//
+
 //        System.out.println();
 //
 //        System.out.println("===== Demo Panglica (1p) =====");
-//        System.out.println(RolaPanglica.GetNecesarPanglica(cutie1));
-//        System.out.println(RolaPanglica.GetNecesarPanglica(cutie2));
-//        System.out.println(RolaPanglica.GetNecesarPanglica(cutie3));
+//        System.out.println("Pentru cutia: " + cutie1 + " necesar lung_panglica=" + cutie1.getLungimePanglica() + " dupa cumparare: {RolaPanglica, disponibil=" +
+//                RolaPanglica.getRola().cumpara(cutie1.getLungimePanglica()) + "}");
+//        System.out.println("Pentru cutia: " + cutie2 + " necesar lung_panglica=" + cutie2.getLungimePanglica() + " dupa cumparare: {RolaPanglica, disponibil=" +
+//                RolaPanglica.getRola().cumpara(cutie2.getLungimePanglica()) + "}");
+//        System.out.println("Pentru cutia: " + cutie3 + " necesar lung_panglica=" + cutie3.getLungimePanglica() + " dupa cumparare: {RolaPanglica, disponibil=" +
+//                RolaPanglica.getRola().cumpara(cutie3.getLungimePanglica()) + "}");
 //
 //        System.out.println();
 //
-//        System.out.println("\n===== Demo Magazin (2p) =====");
+        System.out.println("\n===== Demo Magazin (2p) =====");
         Magazin m = new Magazin();
         List<Pachet> vanzari = m.getListaVanzari();
 //        vanzari.add( new Pachet(new Minge(10), true, true) );
@@ -160,17 +144,16 @@ public class Magazin {
 //        vanzari.add( new Pachet(new Racheta(10,20), false, false) );
 //        vanzari.add( new Pachet(new Avion(10,20,30), false, false) );
 //        vanzari.add( new Pachet(new Avion(10,20,30), true, false) );
-        m.afisVanzari();
-        System.out.println("In rola au mai ramas "+
-                RolaPanglica.getRola().getDisponibil()+" cm");
-//
-////        System.out.println();
-////        m.afisPacheteDupaPret(true);
-////        System.out.println();
-////        m.afisPacheteDupaPret(false);
+//        m.afisVanzari();
+
+
+//        System.out.println();
+//        m.afisPacheteDupaPret(true);
+//        System.out.println();
+//        m.afisPacheteDupaPret(false);
 //
 //        System.out.println();
-//
+
 //        int raspuns = m.cautaPachet(new Pachet(new Avion(10,20, 30), true, false));
 //
 //        if(raspuns != -1)
@@ -178,8 +161,9 @@ public class Magazin {
 //        else {
 //            System.out.println("Pachetul nu a fost gasit");
 //        }
-
         m.citesteVanzari(NumeFisier);
         m.afisVanzari();
+        System.out.println("In rola au mai ramas "+
+                RolaPanglica.getRola().getDisponibil()+" cm");
     }
 }

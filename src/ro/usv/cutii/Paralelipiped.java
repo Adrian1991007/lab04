@@ -1,5 +1,7 @@
 package ro.usv.cutii;
 
+import java.util.Objects;
+
 public class Paralelipiped implements ICutie {
     private final double l;
     private final double L;
@@ -23,11 +25,24 @@ public class Paralelipiped implements ICutie {
 
     @Override
     public String toString() {
-        return "Cutie - Paralelipiped" +
-                "{l=" + l +
+        return "Cutie - " + this.getClass().getSimpleName() +
+                (this.getClass().getSimpleName().equals("Paralelipiped") ? ( "{l=" + l +
                 ", L=" + L +
                 ", h=" + h +
-                '}';
+                '}') : ( "{l=" + l + '}'));
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Paralelipiped that)) return false;
+        return Double.compare(that.l, l) == 0 && Double.compare(that.L, L) == 0 && Double.compare(that.h, h) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(l, L, h);
     }
 
     @Override

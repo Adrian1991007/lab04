@@ -9,18 +9,18 @@ public class FabricaCutii{
     {
         double[] dim = jucarie.getDimensiuni();
         double[] filteredArray = Arrays.stream(dim).filter(num -> num != 0).toArray();
-        switch (filteredArray.length)
+        switch (jucarie.getTipCutie())
         {
-            case 1 -> {
+            case CUB -> {
                 return new Cub(filteredArray[0]);
             }
-            case 2 -> {
+            case CILINDRU -> {
                 return new Cilindru(filteredArray[0], filteredArray[1]);
             }
-            case 3 -> {
+            case PARALELIPIPED -> {
                 return new Paralelipiped(filteredArray[0], filteredArray[1], filteredArray[2]);
             }
-            default -> throw new IllegalStateException("Unexpected value: " + jucarie.getDimensiuni().length);
+            default -> throw new IllegalStateException("Unexpected value: " + jucarie.getTipCutie());
         }
     }
 
